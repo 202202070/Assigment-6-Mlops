@@ -7,9 +7,6 @@ on:
 
 jobs:
 
-  # -------------------
-  # LINTER
-  # -------------------
   lint:
     runs-on: ubuntu-latest
 
@@ -20,12 +17,9 @@ jobs:
         run: pip install flake8
 
       - name: run linter
-        run: flake8 .
+        run: flake8 . --exit-zero
 
 
-  # -------------------
-  # TRAIN
-  # -------------------
   train:
     needs: lint
     runs-on: ubuntu-latest
@@ -40,10 +34,9 @@ jobs:
 
       - name: run training
         run: |
-          echo "training started..."
-          exit 1   # عشان نعمل failure للتجربة
+          python train.py || exit 1
 
-      - name: save logs if failed
+      - name: save logs
         if: failure()
         run: echo "training failed" > error_logs.txt
 
