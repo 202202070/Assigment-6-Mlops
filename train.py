@@ -55,7 +55,7 @@ def simulate_training():
 
     print()
     print(f" Training complete.  validation accuracy: {best_accuracy:.4f}")
-    print("Model checkpoint saved to: ./checkpoints/model_best.pt")
+    print("Model checkpoint saved : ./checkpoints/model_best.pt")
     print("=" * 60)
 
 
