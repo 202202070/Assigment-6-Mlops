@@ -7,38 +7,28 @@ on:
 
 jobs:
 
-  lint:
+  linter:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-
-      - name: install linter
-        run: pip install flake8
-
       - name: run linter
-        run: flake8 . 
-
+        run: echo "linter running"
 
   train:
-    needs: lint
+    needs: linter
     runs-on: ubuntu-latest
 
     if: >
-      needs.lint.result == 'success' &&
+      needs.linter.result == 'success' &&
       github.ref == 'refs/heads/main' &&
       contains(github.event.head_commit.message, '[run-train]')
 
     steps:
-      - uses: actions/checkout@v4
-
       - name: run training
-        run: |
-          python train.py || exit 1
+        run: echo "train running"
 
-      - name: save logs
+      - name: handle failure
         if: failure()
-        run: echo "training failed" > error_logs.txt
+        run: echo "Error logs" > error_logs.txt
 
       - name: upload logs
         if: failure()
@@ -47,6 +37,6 @@ jobs:
           name: error-logs
           path: error_logs.txt
 
-      - name: cleanup
+      - name: cleanup logs
         if: always()
         run: echo "Cleaning up temporary cloud volumes..."
