@@ -1,4 +1,5 @@
 # MLOps Assignment 6 — Gatekeeper CI/CD Pipeline
+<!-- Updated: demonstrate skipped train job -->
 
 ## Overview
 
