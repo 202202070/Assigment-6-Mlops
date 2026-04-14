@@ -1,0 +1,8 @@
+# MLOps Assignment 6 — Python Dependencies
+# Training dependencies (would include torch/tensorflow in a real GPU job)
+numpy>=1.24.0
+scikit-learn>=1.3.0
+
+# Linting tools (installed separately in the lint job)
+flake8>=7.0.0
+pylint>=3.0.0
