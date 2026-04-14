@@ -110,7 +110,7 @@ jobs:
           echo "============================================"
           echo ""
           echo "Starting GPU-accelerated training pipeline..."
-          python train.py
+          python train.py || exit 1
 
       
       - name: Capture error logs on failure
