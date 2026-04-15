@@ -7,15 +7,19 @@ on:
 
 jobs:
 
+
   linter:
     runs-on: ubuntu-latest
+
     steps:
-      - name: run linter
+      - name: Run linter
         run: echo "linter running"
+
 
   train:
     needs: linter
     runs-on: ubuntu-latest
+
 
     if: >
       needs.linter.result == 'success' &&
@@ -23,20 +27,35 @@ jobs:
       contains(github.event.head_commit.message, '[run-train]')
 
     steps:
-      - name: run training
-        run: echo "train running"
 
-      - name: handle failure
+
+      - name: Run training
+        run: |
+          echo "training model..."
+          echo "model output" > model.txt
+
+
+      - name: Handle failure
         if: failure()
-        run: echo "Error logs" > error_logs.txt
+        run: |
+          echo "Error happened during training" > error_logs.txt
 
-      - name: upload logs
+
+      - name: Upload error logs
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: error-logs
           path: error_logs.txt
 
-      - name: cleanup logs
+
+      - name: Upload model artifact
         if: always()
-        run: echo "Cleaning up temporary cloud volumes..."
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model
+          path: model.txt
+
+      - name: Cleanup
+        if: always()
+        run: echo "Cleaning up temporary files..."
