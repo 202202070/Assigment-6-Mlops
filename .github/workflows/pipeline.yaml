@@ -23,8 +23,8 @@ jobs:
 
     if: >
       needs.linter.result == 'success' &&
-      github.ref == 'refs/heads/main' &&
-      contains(github.event.head_commit.message, '[run-train]')
+      github.ref == 'refs/heads/main' 
+      
 
     steps:
       - name: checkout code
