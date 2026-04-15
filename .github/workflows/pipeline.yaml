@@ -7,12 +7,13 @@ on:
 
 jobs:
 
-
   linter:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Run linter
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: run linter
         run: echo "linter running"
 
 
@@ -20,28 +21,33 @@ jobs:
     needs: linter
     runs-on: ubuntu-latest
 
-
     if: >
       needs.linter.result == 'success' &&
       github.ref == 'refs/heads/main' &&
       contains(github.event.head_commit.message, '[run-train]')
 
     steps:
+      - name: checkout code
+        uses: actions/checkout@v4
 
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-      - name: Run training
+      - name: install dependencies
         run: |
-          echo "training model..."
-          echo "model output" > model.txt
+          pip install -r requirements.txt || true
 
+      - name: run training script
+        run: python your_file.py
 
-      - name: Handle failure
+      - name: handle failure
         if: failure()
         run: |
-          echo "Error happened during training" > error_logs.txt
+          echo "Training failed!" > error_logs.txt
 
-
-      - name: Upload error logs
+      - name: upload logs
         if: failure()
         uses: actions/upload-artifact@v4
         with:
@@ -49,13 +55,6 @@ jobs:
           path: error_logs.txt
 
 
-      - name: Upload model artifact
+      - name: cleanup logs
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: trained-model
-          path: model.txt
-
-      - name: Cleanup
-        if: always()
-        run: echo "Cleaning up temporary files..."
+        run: echo "Cleaning up temporary cloud volumes..."
