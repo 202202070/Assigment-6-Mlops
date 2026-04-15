@@ -34,7 +34,7 @@ def simulate_training():
 
     # Simulate epoch training
     best_accuracy = 0.0
-    for epoch in range(1, config["epochs"] + 1):
+    for 
         # Simulate training time
         time.sleep(0.5)
 
