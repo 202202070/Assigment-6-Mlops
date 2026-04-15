@@ -9,7 +9,9 @@ This script represents the expensive training job that is gated by:
 """
 
 
-
+import time
+import random
+import sys
 
 def simulate_training():
     """Simulate a model training loop with progress output."""
@@ -34,7 +36,7 @@ def simulate_training():
 
     # Simulate epoch training
     best_accuracy = 0.0
-    for 
+   for epoch in range(1, config["epochs"] + 1):
         # Simulate training time
         time.sleep(0.5)
 
