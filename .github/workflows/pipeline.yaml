@@ -40,7 +40,7 @@ jobs:
           pip install -r requirements.txt || true
 
       - name: run training script
-        run: python your_file.py
+        run: python train.py
 
       - name: handle failure
         if: failure()
