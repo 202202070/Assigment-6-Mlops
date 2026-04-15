@@ -15,7 +15,7 @@ import sys
 
 def simulate_training():
     """Simulate a model training loop with progress output."""
-    print("=" * 60)
+    print("=" * 5)
     print("  MLOps Assignment 6 — Model Training Pipeline")
     print("=" * 60)
     print()
