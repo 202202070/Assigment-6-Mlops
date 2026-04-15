@@ -8,9 +8,7 @@ This script represents the expensive training job that is gated by:
   3. Commit message containing [run-train]
 """
 
-import time
-import random
-import sys
+
 
 
 def simulate_training():
