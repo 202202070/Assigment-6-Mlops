@@ -23,7 +23,8 @@ jobs:
 
     if: >
       needs.linter.result == 'success' &&
-      github.ref == 'refs/heads/main' 
+      github.ref == 'refs/heads/main' &&
+      contains(github.event.head_commit.message, '[run-train]')
       
 
     steps:
